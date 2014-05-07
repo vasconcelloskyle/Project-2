@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+<%include header %>
+</head>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#user-submit').click(function () {
+                var payload = {
+                    CurrentLabel: $('#label').val(),
+                    ReleaseName: $('#release').val()
+                 };
+
+                console.log(payload);
+
+                 $.ajax({
+                    url: "/enterLabel",
+                    type: "POST",
+                    contentType: "application/json",
+                    processData: false,
+                    data: JSON.stringify(payload),
+                    complete: function (data) {
+                        $('#output').html(data.responseText);
+                    }
+                });
+            });
+        });
+
+    </script>
+
+<body id = "labelBody">
+        <h3>Enter a release and its respective label into the database:</h3>
+        <p>A Release must already be in the database to do this.</p>
+	Label: <input id="label" type="text" /> <br />
+         Release ID(get after entering release): <input id="release" type="text" /> <br />
+         <input id="user-submit" type="submit" />
+         <p id="output"></p>
+<%include footer %>
+</body>
+</html>

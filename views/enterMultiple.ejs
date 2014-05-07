@@ -1,0 +1,48 @@
+<%include header %>
+<html>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#user-submit').click(function () {
+                var payload = {
+                    ArtistName: $('#artist-name').val(),
+                    Genre: $('#genre').val(),
+                    FormedIn: $('#formed-in').val(),
+		    NumMembers: $('#num-members').val(),
+		    ReleaseName: $('#release-name').val(),
+		    ReleaseType: $('#release-type').val(),
+		    ReleaseYear: $('#release-year').val()
+                 };
+
+                console.log(payload);
+
+                 $.ajax({
+                    url: "/enterMultiple",
+                    type: "POST",
+                    contentType: "application/json",
+                    processData: false,
+                    data: JSON.stringify(payload),
+                    complete: function (data) {
+                        $('#output').html(data.responseText);
+                    }
+                });
+            });
+        });
+
+    </script>
+
+<body id ="artistsBody">
+        <h3>Enter an Artist and Release into the database:</h3>
+         Artist: <input id="artist-name" type="text" /> <br />
+         Genre: <input id="genre" type="text" /> <br />
+         Formed In: <input id="formed-in" type="text" /> <br />
+	 Number of Members: <input id="num-members" type="text"/> <br />
+	 Release Name: <input id="release-name" type="text"/> <br/>
+	 Release Type: <input id="release-type" type="text"/> <br/>
+	 Release Year: <input id="release-year" type="text"/><br/>
+         <input id="user-submit" type="submit" />
+         <p id="output"></p>
+<%include footer %>
+</body>
+</html>

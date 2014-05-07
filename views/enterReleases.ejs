@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+<%include header %>
+</head>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#user-submit').click(function () {
+                var payload = {
+                    ReleaseName: $('#release-name').val(),
+                    ReleaseType: $('#release-type').val(),
+	            ReleaseYear: $('#release-year').val(),
+	            Artist: $('#artist').val(),
+	            ID: $('#id').val()
+                 };
+
+                console.log(payload);
+
+                 $.ajax({
+                    url: "/enterReleases",
+                    type: "POST",
+                    contentType: "application/json",
+                    processData: false,
+                    data: JSON.stringify(payload),
+                    complete: function (data) {
+                        $('#output').html(data.responseText);
+                    }
+                });
+            });
+        });
+
+    </script>
+
+<body id = "releasesBody">
+        <h3>Enter information about a release into the database:</h3>
+        <p>The Artist for this Release  must already be in the database to do this.</p>
+	Release Name: <input id="release-name" type="text" /> <br />
+        Release Type(EP,LP,etc): <input id="release-type" type="text" /> <br />
+	Release Year: <input id="release-year" type="text" /> <br />
+	Artist: <input id="artist" type="text" /> <br />
+         <input id="user-submit" type="submit" />
+         <p id="output"></p>
+<%include footer %>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+<%include header %>
+</head>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#user-submit').click(function () {
+                var payload = {
+	            Artist: $('#artist').val(),
+                    ReleaseName: $('#release-name').val(),
+                    ReleaseType: $('#release-type').val(),
+                    ReleaseYear: $('#release-year').val()
+                    };
+
+                console.log(payload);
+
+                 $.ajax({
+                    url: "/edit",
+                    type: "POST",
+                    contentType: "application/json",
+                    processData: false,
+                    data: JSON.stringify(payload),
+                    complete: function (data) {
+                        $('#output').html(data.responseText);
+                    }
+                });
+            });
+        });
+
+    </script>
+
+<body id = "artistsBody">
+        <h3>Change a Release</h3>
+	<p id="text"> This can only be done if the Artist you are changing to is already in the database. <p>
+	
+         Release Name: <input id="release-name" type="text" /> <br />
+         Release Type: <input id="release-type" type="text" /> <br />
+         Release Year: <input id="release-year" type="text" /> <br />
+         Artist: <input id="artist" type="text" /> <br />
+         <input id="user-submit" type="submit" />
+         <p id="output"></p>
+<%include footer %>
+</body>
+</html>
